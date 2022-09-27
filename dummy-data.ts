@@ -40,6 +40,11 @@ const products:Partial<Product>[] = [
 ]
 export async function generateData(){
     const productRep = AppDataSource.getRepository(Product);
+    const productCatRep = AppDataSource.getRepository(ProductCategory);
+    const animeCatRep = AppDataSource.getRepository(AnimeCategory);
+    // create then save
+    await productCatRep.save(pcats.map(cat=>productCatRep.create(cat)));
+    await animeCatRep.save(acats.map(cat=>animeCatRep.create(cat)));
     const savedProds= await productRep.save(products);
 }
 const slugMap = [
@@ -50,8 +55,9 @@ const slugMap = [
 ]
 async function fetchFromSource(){
     const productRep = AppDataSource.getRepository(Product);
+    const productCatRep = AppDataSource.getRepository(ProductCategory);
     for (const cat of slugMap) {
-        const fproducts = await getCategoryProd(cat.slug,cat.productCategory);
+        const fproducts = await getCategoryProd(cat.slug,productCatRep.create(cat.productCategory),null);
         await productRep.save(fproducts);
         console.log("Saved ",fproducts.length," products for slug ",cat.slug);
     }
@@ -64,9 +70,9 @@ export async function purgeDB(){
         }
 }
 AppDataSource.initialize().then(async ()=>{
-    await purgeDB();
-    console.log("Purged DB");
-    await generateData();
+    // await purgeDB();
+    // console.log("Purged DB");
+    // await generateData();
     console.log("Generated Data");
     await fetchFromSource();
     AppDataSource.destroy();

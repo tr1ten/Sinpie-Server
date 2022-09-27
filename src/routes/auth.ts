@@ -6,9 +6,9 @@ import { validateMail } from '../validators/common';
 export const router = express.Router();
 router.post('/register',async (req: Request, res: Response) => {
     try{
-        const {email, password,name} = req.body;
+        const {email, password,username} = req.body;
         if(!email || !password || !validateMail(email)) throw new Error('Valid Email and password are required');
-        const user = await register(email, password,name);
+        const user = await register(email, password,username);
         const token = genToken(user);
         return res.status(200).json({token});
     }

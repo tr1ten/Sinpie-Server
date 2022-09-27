@@ -6,8 +6,11 @@ import passport from 'passport';
 import { PassportStrategy } from "./services/passport";
 import {router as authRouter} from './routes/auth';
 import {router as productRouter} from './routes/product';
+import { router as cartRouter } from "./routes/cart";
 import bodyParser from "body-parser";
 import cors from 'cors';
+import { ormMiddleware } from "./middleware/middleware";
+import morgan from "morgan";
 
 AppDataSource.initialize().then(async () => {
     const app: Express = express();
@@ -22,10 +25,11 @@ AppDataSource.initialize().then(async () => {
         }
     }
     }
-
+    app.use(morgan('dev'));
     app.use(cookieParser());
     app.use(cors(corsOptions));
     app.use(bodyParser.json());
+    app.use(ormMiddleware);
     app.use(session({
         secret: 'keyboard cat',
         resave: true,
@@ -38,6 +42,7 @@ AppDataSource.initialize().then(async () => {
     const port = process.env.PORT || 3000;
     app.use('/auth', authRouter);
     app.use('/',productRouter);
+    app.use('/cart',cartRouter);
     // route for checking if user logged in or not
     app.get('/user',passport.authenticate('jwt',{session:false}),async (req: Request, res: Response) => {
         try{

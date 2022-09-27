@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from "typeorm";
 import { AnimeCategory } from "./AnimeCategory";
+import { CartItem } from "./CartItem";
 import { ProductCategory } from "./ProductCategory";
 import { User } from "./User";
 
@@ -38,8 +39,6 @@ export class Product {
         })
         animeCategory: Relation<AnimeCategory>
 
-        @ManyToMany(type => User, user => user.favoriteProducts,{
-            onDelete: "CASCADE"
-        })
+        @ManyToMany(type => User, user => user.favoriteProducts)
         favoriteUsers: Relation<User[]>
-}
+    }

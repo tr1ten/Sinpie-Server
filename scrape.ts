@@ -56,4 +56,3 @@ async function scrape(){
     console.log(await getCategoryProd(slug));
 
 }
-scrape();
