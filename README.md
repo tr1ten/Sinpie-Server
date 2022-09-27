@@ -1,7 +1,23 @@
-# Awesome Project Build with TypeORM
+## What is Sinpie?
+Sinpie is a simple maketplace which index products from several online stores. It is purely non profitable and we don't make use of any affialiate link in our redirects.
 
-Steps to run this project:
+This serves as backend 
+## Set up
 
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+### Requirements
+- Node >=14
+
+Install dependencies
+```
+npm install
+```
+or use yarn if you prefer
+```
+yarn install
+```
+
+### Run the server
+
+```
+npm run dev
+```
