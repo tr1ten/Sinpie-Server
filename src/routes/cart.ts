@@ -25,15 +25,14 @@ router.post('/add',passport.authenticate('jwt',{session:false}),async (req: $Req
         const cartItem = {
             product:product,
             quantity:qty,
-            cart:cart,
+            cart,
             cartId:cart.id,
             price:product.price*qty
 
         };
-        // saving it along with cart doesn't work for reason
+        // saving it along with cart doesn't work for reason that i don't know :(
         await orm.getRepository(CartItem).save(cartItem);
-        cart.total += cartItem.price;
-        await cartRep.save(cart);
+        cartRep.update({id:cart.id},{total:cart.total+cartItem.price});
         return res.status(200).json({added: 'true'});
     }
     catch(error){
@@ -48,12 +47,9 @@ router.get('/',passport.authenticate('jwt',{session:false}),async (req: $Request
     const {orm} = req.locals;
     try{
         const cart = user.cart;
-        const ucart = await orm.getRepository(Cart).findOne({where: {id: cart.id},relations:{
-            cartItems:{
-                product:true
-            }
-        }});
-        return res.status(200).json({cart});
+        const ucart = await orm.getRepository(Cart).findOne({where: {id: cart.id},relations:['cartItems','cartItems.product']
+        });
+        return res.status(200).json({cart:ucart});
     }
     catch(error){
         logger(error);

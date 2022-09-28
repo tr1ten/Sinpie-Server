@@ -48,7 +48,7 @@ export class User {
   @JoinTable()
   favoriteProducts: Relation<Product[]>;
 
-  @OneToOne((type) => Cart, (cart) => cart.user,{cascade:true,eager:true})
+  @OneToOne((type) => Cart, (cart) => cart.user,{cascade:true})
   @JoinColumn()
   cart: Cart;
 }

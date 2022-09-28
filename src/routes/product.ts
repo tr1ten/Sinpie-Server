@@ -5,6 +5,7 @@ import { AnimeCategory } from '../entity/AnimeCategory';
 import { Product } from '../entity/Product';
 import { ProductCategory } from '../entity/ProductCategory';
 import { User } from '../entity/User';
+import { logger } from '../services/logger';
 import { $Request } from '../type';
 export const router = express.Router();
 type PRequest = $Request & {
@@ -53,10 +54,10 @@ router.post('/:pid/favorite',passport.authenticate('jwt',{session:false}),async 
         const user:any = req.user;
         const product = await req.locals.orm.getRepository(Product).findOne({where: {id: pid}});
         const fetchedUser = await req.locals.orm.getRepository(User).findOne({where: {id: user.id},relations: {
-            favoriteProducts:true
+            favoriteProducts:true,
+            cart:true
         }});
         if(!product) throw new Error('Product not found');
-        if(!fetchedUser) throw new Error('User not found');
         const p =fetchedUser.favoriteProducts.find((product)=>product.id===pid)
         if(p){
             fetchedUser.favoriteProducts = fetchedUser.favoriteProducts.filter((product)=>product.id!==pid);
@@ -64,10 +65,11 @@ router.post('/:pid/favorite',passport.authenticate('jwt',{session:false}),async 
         else{
             fetchedUser.favoriteProducts.push(product);
         }
-        req.locals.orm.getRepository(User).save(fetchedUser);
+        await req.locals.orm.getRepository(User).save(fetchedUser);
         return res.status(200).json({favorite:!Boolean(p)});
     }
     catch(e){
+        logger(e);
         return res.status(400).json({error: e.message});
     }
 })

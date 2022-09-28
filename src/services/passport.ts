@@ -11,7 +11,9 @@ export const PassportStrategy = new JWTStrategy.Strategy({
     jwtFromRequest: JWTStrategy.ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET}, 
     (jwt_payload, done) => {
-        AppDataSource.getRepository(User).findOne({where:{id: jwt_payload.sub},select:['age','firstName','id','email']}).then(user => {
+        AppDataSource.getRepository(User).findOne({where:{id: jwt_payload.sub},select:['age','firstName','id','email'],relations:{
+            cart:true
+        }}).then(user => {
             if(user){
                 return done(null, user);
             }
