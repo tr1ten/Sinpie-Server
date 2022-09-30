@@ -11,6 +11,8 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import { ormMiddleware } from "./middleware/middleware";
 import morgan from "morgan";
+import { router as orderRouter } from "./routes/order";
+import userRouter from './routes/user';
 
 AppDataSource.initialize().then(async () => {
     const app: Express = express();
@@ -43,6 +45,8 @@ AppDataSource.initialize().then(async () => {
     app.use('/auth', authRouter);
     app.use('/',productRouter);
     app.use('/cart',cartRouter);
+    app.use('/order',orderRouter);
+    app.use('/user',userRouter);
     // route for checking if user logged in or not
     app.get('/user',passport.authenticate('jwt',{session:false}),async (req: Request, res: Response) => {
         try{

@@ -16,7 +16,7 @@ type PRequest = $Request & {
         }
 }
 router.get('/products',async (req: PRequest, res: Response) => {
-    const {pcat,acat,size} = req.query;
+    const {pcat,acat,size,filterBy,sortBy} = req.query;
     const whereCluase = {
         productCategory: {
             slug:pcat
@@ -31,11 +31,25 @@ router.get('/products',async (req: PRequest, res: Response) => {
     if(!acat){
         delete whereCluase.animeCategory;
     }
+    const orderBy:any = {};
+    switch (sortBy) {
+        case 'price-low':
+            orderBy.price = 'ASC';
+            break;
+        case 'price-high':
+            orderBy.price = 'DESC';
+        default:
+            break;
+    }
     const {orm} = req.locals;
-    const allProds =  await orm.getRepository(Product).find({where:whereCluase,take: size ?? 10,order: {price: "DESC"},relations:{
+    const allProds =  await orm.getRepository(Product).find({where:whereCluase,take: size ?? 10,order: orderBy,relations:{
         animeCategory:true,
         productCategory:true
     }});
+    if(filterBy){
+        // for now just shuffle the array
+        allProds.sort(() => Math.random() - 0.5);
+    }
     return res.status(200).json({products: allProds});
 })
 router.get("/animeCats",async (req: $Request, res: Response) => {
@@ -109,4 +123,3 @@ router.get('/product/:pid',async (req: $Request, res: Response) => {
         return res.status(400).json({error: e.message});
     }
 })
-

@@ -1,5 +1,6 @@
 import express from 'express';
 import { Request, Response } from 'express';
+import passport from 'passport';
 import { genToken, login, register } from '../services/passport';
 import { validateMail } from '../validators/common';
 
@@ -29,4 +30,3 @@ router.post('/login',async (req: Request, res: Response) => {
         return res.status(400).json({error: e.message});
     }
 });
-
