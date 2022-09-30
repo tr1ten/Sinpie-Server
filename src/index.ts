@@ -16,7 +16,7 @@ import userRouter from './routes/user';
 
 AppDataSource.initialize().then(async () => {
     const app: Express = express();
-    var whitelist = ['http://localhost:3000','https://sinpie.vercel.app']
+    var whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://www.ilov.tech','https://www.ilov.tech','http://ilov.tech','https://ilov.tech','https://sinpie.vercel.app/']
     var corsOptions = {
     credentials: true,
     origin: function(origin, callback) {
