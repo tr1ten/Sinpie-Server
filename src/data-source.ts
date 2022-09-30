@@ -12,13 +12,14 @@ require("dotenv").config()
 // environment variables
 const env = process.env
 export const AppDataSource = new DataSource({
-    type: "mysql",
-    host:  env.MYSQL_HOST,
-    port: parseInt(env.MYSQL_PORT),
-    username:  env.MYSQL_USER,
-    password: env.MYSQL_PASSWORD,
+    type: "postgres",
+    host:  env.SQL_HOST,
+    port: parseInt(env.SQL_PORT),
+    username:  env.SQL_USER,
+    password: env.SQL_PASSWORD,
     database: "sinpie",
-    synchronize: true,
+    ssl: true,
+    synchronize: false,
     logging: false,
     entities: [User, Product, ProductCategory, AnimeCategory,Cart,CartItem,Order],
     migrations: [],
