@@ -58,7 +58,7 @@ AppDataSource.initialize().then(async () => {
         }
     });
     app.get('/', (req: Request, res: Response) => {
-        res.send('Welcome to sinpie api!');
+        res.status(200).send('Welcome to sinpie api!');
     });
     app.listen(port, () => {
         console.log(`App listening at http://localhost:${port}`);
