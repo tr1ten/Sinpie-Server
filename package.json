@@ -32,7 +32,9 @@
       "typeorm": "0.3.9"
    },
    "scripts": {
-      "start": "nodemon src/index.ts",
+      "build": "tsc",
+      "start": "node build/src/index.js",
+      "dev": "nodemon build/src/index.ts",
       "dummy-data": "ts-node dummy-data.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    }
