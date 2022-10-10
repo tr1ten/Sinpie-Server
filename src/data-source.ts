@@ -11,6 +11,7 @@ import { UserSubscriber } from "./entity/UserSubscriber"
 require("dotenv").config()
 // environment variables
 const env = process.env
+
 export const AppDataSource = new DataSource({
     type: "postgres",
     host:  env.SQL_HOST,
@@ -25,3 +26,10 @@ export const AppDataSource = new DataSource({
     migrations: [],
     subscribers: [UserSubscriber]
 })
+export const DB_OPTIONS = {
+	host: env.SQL_HOST,
+	port:   env.SQL_PORT,
+	user: env.SQL_USER,
+	password: env.SQL_PASSWORD,
+	database: 'sinpie'
+};

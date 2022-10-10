@@ -1,4 +1,4 @@
-import { AppDataSource } from "./data-source"
+import { AppDataSource, DB_OPTIONS } from "./data-source"
 import express, { Express, Request, Response } from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -13,6 +13,8 @@ import { ormMiddleware } from "./middleware/middleware";
 import morgan from "morgan";
 import { router as orderRouter } from "./routes/order";
 import userRouter from './routes/user';
+var MySQLStore = require('express-mysql-session')(session);
+const sessionStore = new MySQLStore(DB_OPTIONS);
 
 AppDataSource.initialize().then(async () => {
     const app: Express = express();
@@ -34,8 +36,10 @@ AppDataSource.initialize().then(async () => {
     app.use(ormMiddleware);
     app.use(session({
         secret: 'keyboard cat',
+        key: 'sinpie_id',
         resave: true,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        store: sessionStore,
         cookie: { secure: false ,maxAge: 60000}
     }));
     app.use(passport.initialize());
