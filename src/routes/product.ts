@@ -50,7 +50,20 @@ router.get('/products',async (req: PRequest, res: Response) => {
         // for now just shuffle the array
         allProds.sort(() => Math.random() - 0.5);
     }
-    return res.status(200).json({products: allProds});
+    // add isFav to each product
+    const user = await orm.getRepository(User).findOne({where:{id:req.user?.id},relations:{
+        favoriteProducts:true
+    }});
+    let newProds:any[] = allProds;
+    if(user){
+        newProds = allProds.map(prod => {
+            const np:any = prod;
+            np.isFav = user.favoriteProducts.some(fav => fav.id === prod.id);
+            return np;
+        });
+        
+    }
+    return res.status(200).json({products: newProds});
 })
 router.get("/animeCats",async (req: $Request, res: Response) => {
     const animeCategories = await req.locals.orm.getRepository(AnimeCategory).find();
