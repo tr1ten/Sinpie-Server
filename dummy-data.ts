@@ -48,16 +48,17 @@ export async function generateData(){
     const savedProds= await productRep.save(products);
 }
 const slugMap = [
-    {slug:"/product-category/apparel/hoodies-jackets/hoodies",productCategory:pcats[0] as ProductCategory},
-    {slug:"/product-category/apparel/hoodies-jackets/bomber-jackets",productCategory:pcats[1] as ProductCategory},
-    {slug:"/product-category/apparel/crop-tops",productCategory:pcats[2] as ProductCategory},
-    {slug:"/product-category/accessories/caps-hats",productCategory:pcats[3] as ProductCategory},
+    {slug:"/product-category/apparel/hoodies-jackets/hoodies",productCategory:pcats[0] as ProductCategory,animeCategory:acats[0] as AnimeCategory},
+    {slug:"/product-category/apparel/hoodies-jackets/bomber-jackets",productCategory:pcats[1] as ProductCategory,animeCategory:acats[1] as AnimeCategory},
+    {slug:"/product-category/apparel/crop-tops",productCategory:pcats[2] as ProductCategory,animeCategory:acats[2] as AnimeCategory},
+    {slug:"/product-category/accessories/caps-hats",productCategory:pcats[3] as ProductCategory,animeCategory:acats[3] as AnimeCategory},
 ]
 async function fetchFromSource(){
     const productRep = AppDataSource.getRepository(Product);
     const productCatRep = AppDataSource.getRepository(ProductCategory);
+    const animeCatRep = AppDataSource.getRepository(AnimeCategory);
     for (const cat of slugMap) {
-        const fproducts = await getCategoryProd(cat.slug,productCatRep.create(cat.productCategory),null);
+        const fproducts = await getCategoryProd(cat.slug,productCatRep.create(cat.productCategory),animeCatRep.create(cat.animeCategory));
         await productRep.save(fproducts);
         console.log("Saved ",fproducts.length," products for slug ",cat.slug);
     }

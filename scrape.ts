@@ -40,6 +40,7 @@ export async function getCategoryProd(catSlug:string,productCategory?:ProductCat
         
         const product:Partial<Product> = {
             productCategory,
+            animeCategory,
             label: $(el).find('.woocommerce-loop-product__title').text(),
             description: "This is description placeholder, please update it :^",
             price: convertToPrice($(el).find('.woocommerce-Price-amount').text().split('₹')[1]),
