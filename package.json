@@ -2,9 +2,6 @@
    "name": "sinpie-server",
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
-   "engines": {
-      "node": ">=12.0.0"
-   },
    "type": "commonjs",
    "devDependencies": {
       "@types/cheerio": "^0.22.31",
