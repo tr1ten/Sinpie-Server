@@ -13,13 +13,12 @@ require("dotenv").config()
 const env = process.env
 
 export const AppDataSource = new DataSource({
-    type: "postgres",
+    type: "mssql",
     host:  env.SQL_HOST,
     port: parseInt(env.SQL_PORT),
     username:  env.SQL_USER,
     password: env.SQL_PASSWORD,
     database: "sinpie",
-    ssl: true,
     synchronize: false,
     logging: false,
     entities: [User, Product, ProductCategory, AnimeCategory,Cart,CartItem,Order],
