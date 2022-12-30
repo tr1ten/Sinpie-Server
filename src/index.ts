@@ -19,7 +19,7 @@ const whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://w
 export const corsOptions = {
 credentials: true,
 origin: function(origin: string, callback: (arg0: Error, arg1: boolean) => void) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
   callback(null, true)
 }  else {
   callback(new Error(`${origin}, Not allowed by CORS`),false)
