@@ -39,6 +39,7 @@ AppDataSource.initialize().then(async () => {
         store: sessionStore,
         cookie: { secure: false ,maxAge: 60000}
     }));
+    app.use(cors());
     app.use(passport.initialize());
     app.use(passport.session());
     passport.use(PassportStrategy);

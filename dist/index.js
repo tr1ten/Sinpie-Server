@@ -55,6 +55,7 @@ data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, vo
         store: sessionStore,
         cookie: { secure: false, maxAge: 60000 }
     }));
+    app.use((0, cors_1.default)());
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     passport_1.default.use(passport_2.PassportStrategy);
