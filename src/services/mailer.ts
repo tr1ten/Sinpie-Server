@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 require('dotenv').config();
 const configOpt = {
   host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
+  port: process.env.MAIL_PORT as unknown as number,
   secure: false, // true for 465, false for other ports
   auth: {
       user: process.env.MAIL_USER, 

@@ -21,11 +21,11 @@ AppDataSource.initialize().then(async () => {
     var whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://www.ilov.tech','https://www.ilov.tech','http://ilov.tech','https://ilov.tech','https://sinpie.vercel.app/']
     var corsOptions = {
     credentials: true,
-    origin: function(origin, callback) {
+    origin: function(origin: string, callback: (arg0: Error, arg1: boolean) => void) {
         if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     }  else {
-      callback(new Error(`${origin}, Not allowed by CORS`))
+      callback(new Error(`${origin}, Not allowed by CORS`),false)
         }
     }
     }
@@ -36,7 +36,6 @@ AppDataSource.initialize().then(async () => {
     app.use(ormMiddleware);
     app.use(session({
         secret: 'keyboard cat',
-        key: 'sinpie_id',
         resave: true,
         saveUninitialized: false,
         store: sessionStore,
