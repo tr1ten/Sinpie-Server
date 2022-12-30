@@ -13,8 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
+const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const passport_1 = __importDefault(require("passport"));
+const index_1 = require("../index");
 const AnimeCategory_1 = require("../entity/AnimeCategory");
 const Product_1 = require("../entity/Product");
 const ProductCategory_1 = require("../entity/ProductCategory");
@@ -80,7 +82,7 @@ exports.router.get("/productCats", (req, res) => __awaiter(void 0, void 0, void 
     return res.status(200).json({ productCategories });
 }));
 // toggles the like of a product
-exports.router.post('/:pid/favorite', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.router.post('/:pid/favorite', (0, cors_1.default)(index_1.corsOptions), passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { pid } = req.params;
         const user = req.user;
@@ -107,7 +109,7 @@ exports.router.post('/:pid/favorite', passport_1.default.authenticate('jwt', { s
     }
 }));
 // get fav of a product
-exports.router.get('/:pid/favorite', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.router.get('/:pid/favorite', (0, cors_1.default)(index_1.corsOptions), passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     try {
         const { pid } = req.params;

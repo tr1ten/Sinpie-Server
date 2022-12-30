@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.corsOptions = void 0;
 const data_source_1 = require("./data-source");
 const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
@@ -29,23 +30,22 @@ const order_1 = require("./routes/order");
 const user_1 = __importDefault(require("./routes/user"));
 var MySQLStore = require('express-mysql-session')(express_session_1.default);
 const sessionStore = new MySQLStore(data_source_1.DB_OPTIONS);
+const whitelist = ['http://localhost:3000', 'https://sinpie.vercel.app', 'http://www.ilov.tech', 'https://www.ilov.tech', 'http://ilov.tech', 'https://ilov.tech', 'https://sinpie.vercel.app/'];
+exports.corsOptions = {
+    credentials: true,
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error(`${origin}, Not allowed by CORS`), false);
+        }
+    }
+};
 data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, void 0, function* () {
     const app = (0, express_1.default)();
-    var whitelist = ['http://localhost:3000', 'https://sinpie.vercel.app', 'http://www.ilov.tech', 'https://www.ilov.tech', 'http://ilov.tech', 'https://ilov.tech', 'https://sinpie.vercel.app/'];
-    var corsOptions = {
-        credentials: true,
-        origin: function (origin, callback) {
-            if (whitelist.indexOf(origin) !== -1) {
-                callback(null, true);
-            }
-            else {
-                callback(new Error(`${origin}, Not allowed by CORS`), false);
-            }
-        }
-    };
     app.use((0, morgan_1.default)('dev'));
     app.use((0, cookie_parser_1.default)());
-    app.use((0, cors_1.default)(corsOptions));
     app.use(body_parser_1.default.json());
     app.use(middleware_1.ormMiddleware);
     app.use((0, express_session_1.default)({
@@ -59,11 +59,11 @@ data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, vo
     app.use(passport_1.default.session());
     passport_1.default.use(passport_2.PassportStrategy);
     const port = process.env.PORT || 3000;
-    app.use('/auth', auth_1.router);
+    app.use('/auth', (0, cors_1.default)(exports.corsOptions), auth_1.router);
     app.use('/', product_1.router);
-    app.use('/cart', cart_1.router);
-    app.use('/order', order_1.router);
-    app.use('/user', user_1.default);
+    app.use('/cart', (0, cors_1.default)(exports.corsOptions), cart_1.router);
+    app.use('/order', (0, cors_1.default)(exports.corsOptions), order_1.router);
+    app.use('/user', (0, cors_1.default)(exports.corsOptions), user_1.default);
     // route for checking if user logged in or not
     app.get('/user', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {

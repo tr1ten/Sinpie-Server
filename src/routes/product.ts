@@ -1,6 +1,8 @@
+import cors from 'cors';
 import express from 'express';
 import { Request, Response } from 'express';
 import passport from 'passport';
+import { corsOptions } from '../index';
 import { AnimeCategory } from '../entity/AnimeCategory';
 import { Product } from '../entity/Product';
 import { ProductCategory } from '../entity/ProductCategory';
@@ -75,7 +77,7 @@ router.get("/productCats",async (req: $Request, res: Response) => {
 });
 
 // toggles the like of a product
-router.post('/:pid/favorite',passport.authenticate('jwt',{session:false}),async (req: $Request, res: Response) => {
+router.post('/:pid/favorite',cors(corsOptions),passport.authenticate('jwt',{session:false}),async (req: $Request, res: Response) => {
     try{
         const {pid} =  req.params;
         const user:any = req.user;
@@ -102,7 +104,7 @@ router.post('/:pid/favorite',passport.authenticate('jwt',{session:false}),async 
 })
 
 // get fav of a product
-router.get('/:pid/favorite',passport.authenticate('jwt',{session:false}),async (req: $Request, res: Response) => {
+router.get('/:pid/favorite',cors(corsOptions),passport.authenticate('jwt',{session:false}),async (req: $Request, res: Response) => {
     try{
         const {pid} =  req.params;
         const user:any = req.user;

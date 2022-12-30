@@ -15,23 +15,21 @@ import { router as orderRouter } from "./routes/order";
 import userRouter from './routes/user';
 var MySQLStore = require('express-mysql-session')(session);
 const sessionStore = new MySQLStore(DB_OPTIONS);
-
+const whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://www.ilov.tech','https://www.ilov.tech','http://ilov.tech','https://ilov.tech','https://sinpie.vercel.app/']
+export const corsOptions = {
+credentials: true,
+origin: function(origin: string, callback: (arg0: Error, arg1: boolean) => void) {
+    if (whitelist.indexOf(origin) !== -1) {
+  callback(null, true)
+}  else {
+  callback(new Error(`${origin}, Not allowed by CORS`),false)
+    }
+}
+}
 AppDataSource.initialize().then(async () => {
     const app: Express = express();
-    var whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://www.ilov.tech','https://www.ilov.tech','http://ilov.tech','https://ilov.tech','https://sinpie.vercel.app/']
-    var corsOptions = {
-    credentials: true,
-    origin: function(origin: string, callback: (arg0: Error, arg1: boolean) => void) {
-        if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    }  else {
-      callback(new Error(`${origin}, Not allowed by CORS`),false)
-        }
-    }
-    }
     app.use(morgan('dev'));
     app.use(cookieParser());
-    app.use(cors(corsOptions));
     app.use(bodyParser.json());
     app.use(ormMiddleware);
     app.use(session({
@@ -45,11 +43,11 @@ AppDataSource.initialize().then(async () => {
     app.use(passport.session());
     passport.use(PassportStrategy);
     const port = process.env.PORT || 3000;
-    app.use('/auth', authRouter);
+    app.use('/auth',cors(corsOptions),authRouter);
     app.use('/',productRouter);
-    app.use('/cart',cartRouter);
-    app.use('/order',orderRouter);
-    app.use('/user',userRouter);
+    app.use('/cart',cors(corsOptions),cartRouter);
+    app.use('/order',cors(corsOptions),orderRouter);
+    app.use('/user',cors(corsOptions),userRouter);
     // route for checking if user logged in or not
     app.get('/user',passport.authenticate('jwt',{session:false}),async (req: Request, res: Response) => {
         try{
