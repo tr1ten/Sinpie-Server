@@ -54,14 +54,16 @@ const slugMap = [
     {slug:"/product-category/accessories/caps-hats",productCategory:pcats[3] as ProductCategory,animeCategory:acats[3] as AnimeCategory},
 ]
 async function fetchFromSource(){
-    const productRep = AppDataSource.getRepository(Product);
-    const productCatRep = AppDataSource.getRepository(ProductCategory);
-    const animeCatRep = AppDataSource.getRepository(AnimeCategory);
-    for (const cat of slugMap) {
-        const fproducts = await getCategoryProd(cat.slug,productCatRep.create(cat.productCategory),animeCatRep.create(cat.animeCategory));
-        await productRep.save(fproducts);
-        console.log("Saved ",fproducts.length," products for slug ",cat.slug);
-    }
+    await AppDataSource.manager.transaction(async (transactionalEntityManager)=>{
+        const productRep = transactionalEntityManager.getRepository(Product);
+        const productCatRep = transactionalEntityManager.getRepository(ProductCategory);
+        const animeCatRep = transactionalEntityManager.getRepository(AnimeCategory);
+        for (const cat of slugMap) {
+            const fproducts = await getCategoryProd(cat.slug,productCatRep.create(cat.productCategory),animeCatRep.create(cat.animeCategory));
+            await productRep.save(fproducts);
+            console.log("Saved ",fproducts.length," products for slug ",cat.slug);
+        }
+    });
 }
 export async function purgeDB(){
     const entities = AppDataSource.entityMetadatas;

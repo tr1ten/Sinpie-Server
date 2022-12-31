@@ -20,6 +20,7 @@ export const AppDataSource = new DataSource({
     password: env.SQL_PASSWORD,
     database: "sinpie",
     synchronize: false,
+    dropSchema: false,
     logging: false,
     entities: [User, Product, ProductCategory, AnimeCategory,Cart,CartItem,Order],
     migrations: [],

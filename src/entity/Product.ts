@@ -15,9 +15,15 @@ export class Product {
     
         @Column()
         price: number
+
+        @Column({
+            default: 0
+        })
+        rating: number
     
-        @Column()
+        @Column({type:"varchar",length: 3000})
         description: string
+        
 
         @Column({
             default:"https://www.comicsense.in"

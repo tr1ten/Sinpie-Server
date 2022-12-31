@@ -22,6 +22,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: env.SQL_PASSWORD,
     database: "sinpie",
     synchronize: false,
+    dropSchema: false,
     logging: false,
     entities: [User_1.User, Product_1.Product, ProductCategory_1.ProductCategory, AnimeCategory_1.AnimeCategory, Cart_1.Cart, CartItem_1.CartItem, Order_1.Order],
     migrations: [],

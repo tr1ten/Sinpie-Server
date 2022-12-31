@@ -29,7 +29,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], Product.prototype, "rating", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 3000 }),
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
