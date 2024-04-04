@@ -76,7 +76,7 @@ AppDataSource.initialize().then(async ()=>{
     // await purgeDB();
     // console.log("Purged DB");
     // await generateData();
-    console.log("Generated Data");
+    // console.log("Generated Data");
     await fetchFromSource();
     AppDataSource.destroy();
 })

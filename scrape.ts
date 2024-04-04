@@ -33,7 +33,10 @@ function convertToPrice(price: string): number {
 }
 export async function getCategoryProd(catSlug:string,productCategory?:ProductCategory,animeCategory?:AnimeCategory) {
     const url = ROOT_URL + catSlug;
+    console.log("Fetching ",url);
     const html = await getHTML(url);
+    console.log("Fetched ",url,html);
+    
     const $ =  cheerio.load(html);
     const products:Partial<Product>[] = [];
     $('ul.products > li.product').each(async (i, el) => {
@@ -63,3 +66,4 @@ async function scrape(){
     const slug = '/product-category/apparel/hoodies-jackets/hoodies';
     console.log(await getCategoryProd(slug));
 }
+scrape();

@@ -15,12 +15,12 @@ require("dotenv").config();
 // environment variables
 const env = process.env;
 exports.AppDataSource = new typeorm_1.DataSource({
-    type: "mssql",
+    type: "postgres",
     host: env.SQL_HOST,
     port: parseInt(env.SQL_PORT),
     username: env.SQL_USER,
     password: env.SQL_PASSWORD,
-    database: "sinpie",
+    database: env.SQL_DATABASE || "sinpie",
     synchronize: false,
     dropSchema: false,
     logging: false,
