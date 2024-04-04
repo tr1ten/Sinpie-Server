@@ -40,7 +40,8 @@
       "passport-jwt": "^4.0.0",
       "pg": "^8.11.5",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.3.9"
+      "typeorm": "0.3.9",
+      "undici": "^6.11.1"
    },
    "scripts": {
       "build": "rimraf dist && tsc ",

@@ -3,7 +3,6 @@ import { Product } from "./src/entity/Product";
 import { ProductCategory } from "./src/entity/ProductCategory";
 import { AnimeCategory } from "./src/entity/AnimeCategory";
 import { getCategoryProd } from "./scrape";
-
 const pcats:Partial<ProductCategory>[] = [
     {label:"Hoodie",id:1},
     {label:"Jacket",id:2},
@@ -73,10 +72,10 @@ export async function purgeDB(){
         }
 }
 AppDataSource.initialize().then(async ()=>{
-    // await purgeDB();
-    // console.log("Purged DB");
-    // await generateData();
-    // console.log("Generated Data");
+    await purgeDB();
+    console.log("Purged DB");
+    await generateData();
+    console.log("Generated Data");
     await fetchFromSource();
     AppDataSource.destroy();
 })

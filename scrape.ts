@@ -4,13 +4,15 @@ import { AppDataSource } from "./src/data-source";
 import { AnimeCategory } from "./src/entity/AnimeCategory";
 import { Product } from "./src/entity/Product";
 import { ProductCategory } from "./src/entity/ProductCategory";
+import { fetch, setGlobalDispatcher, Agent} from 'undici';
+setGlobalDispatcher(new Agent({connect: { timeout: 90000 }}));
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 
 const ROOT_URL = "https://www.comicsense.in";
-export const fetch = async function (...args: any) {
-    const {default: fetch} = await _importDynamic('node-fetch');
-    return fetch(...args);
-}
+// export const fetch = async function (...args: any) {
+//     const {default: fetch} = await _importDynamic('node-fetch');
+//     return fetch(...args);
+// }
 function getHTML(url: string) {
   return fetch(url).then((res) => res.text());
 }
@@ -22,7 +24,7 @@ function getProductsFromHTML(html: string) {
             label: $(el).find('h2').text(),
             price: $(el).find('.price').text().split('₹')[1],
             image: $(el).find('.ct-image-container > img').first().attr('data-lazy-src'),
-            shopUrl: $(el).find('a.ct-image-container').first().attr('href')
+            shopUrl: $(el).find('a.ct-image-container').first().attr('href'),
         };
         products.push(product);
     });
@@ -35,7 +37,7 @@ export async function getCategoryProd(catSlug:string,productCategory?:ProductCat
     const url = ROOT_URL + catSlug;
     console.log("Fetching ",url);
     const html = await getHTML(url);
-    console.log("Fetched ",url,html);
+    console.log("Fetched ",url);
     
     const $ =  cheerio.load(html);
     const products:Partial<Product>[] = [];
@@ -48,7 +50,7 @@ export async function getCategoryProd(catSlug:string,productCategory?:ProductCat
             description: "No description available",
             price: convertToPrice($(el).find('.woocommerce-Price-amount').text().split('₹')[1]),
             rating: parseFloat($(el).find('.rating').text()) || 0,
-            image: $(el).find('img.attachment-woocommerce_thumbnail').first().attr('data-lazy-src'),
+            image: $(el).find('img.wp-post-image').first().attr('src'),
             shopUrl: $(el).find('.woocommerce-LoopProduct-link').first().attr('href')
         };
         products.push(product);
@@ -66,4 +68,4 @@ async function scrape(){
     const slug = '/product-category/apparel/hoodies-jackets/hoodies';
     console.log(await getCategoryProd(slug));
 }
-scrape();
+// scrape();
