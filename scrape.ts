@@ -8,7 +8,7 @@ import { fetch, setGlobalDispatcher, Agent} from 'undici';
 setGlobalDispatcher(new Agent({connect: { timeout: 90000 }}));
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 
-const ROOT_URL = "https://www.comicsense.in";
+const ROOT_URL = "https://www.comicsense.store";
 // export const fetch = async function (...args: any) {
 //     const {default: fetch} = await _importDynamic('node-fetch');
 //     return fetch(...args);

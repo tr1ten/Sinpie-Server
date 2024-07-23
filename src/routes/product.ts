@@ -9,6 +9,7 @@ import { ProductCategory } from '../entity/ProductCategory';
 import { User } from '../entity/User';
 import { logger } from '../services/logger';
 import { $Request } from '../type';
+import { Not } from 'typeorm';
 export const router = express.Router();
 type PRequest = $Request & {
     query:{
@@ -68,11 +69,22 @@ router.get('/products',async (req: PRequest, res: Response) => {
     return res.status(200).json({products: newProds});
 })
 router.get("/animeCats",async (req: $Request, res: Response) => {
-    const animeCategories = await req.locals.orm.getRepository(AnimeCategory).find();
+    // not include other label 
+    const animeCategories = await req.locals.orm.getRepository(AnimeCategory).find({
+        where: {
+            label: Not("Other")
+        }
+    });
     return res.status(200).json({animeCategories});
 })
 router.get("/productCats",async (req: $Request, res: Response) => {
-    const productCategories = await req.locals.orm.getRepository(ProductCategory).find();
+    const productCategories = await req.locals.orm.getRepository(ProductCategory).find(
+        {
+            where: {
+                label: Not("Other")
+            }
+        }
+    );
     return res.status(200).json({productCategories});
 });
 

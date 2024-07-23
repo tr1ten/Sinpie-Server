@@ -8,12 +8,14 @@ const pcats:Partial<ProductCategory>[] = [
     {label:"Jacket",id:2},
     {label:"Tops",id:3},
     {label:"Hats",id:4},
+    {label:"Other",id:5},
 ]
 const acats:Partial<AnimeCategory>[] = [
     {label:"Naruto",id:1},
     {label:"Attack on Titan",id:2},
     {label:"One Piece",id:3},
     {label:"Bleach",id:4},
+    {label:"Other",id:5},
 ]
 const products:Partial<Product>[] = [
     {
@@ -47,10 +49,15 @@ export async function generateData(){
     const savedProds= await productRep.save(products);
 }
 const slugMap = [
-    {slug:"/product-category/apparel/hoodies-jackets/hoodies",productCategory:pcats[0] as ProductCategory,animeCategory:acats[0] as AnimeCategory},
-    {slug:"/product-category/apparel/hoodies-jackets/bomber-jackets",productCategory:pcats[1] as ProductCategory,animeCategory:acats[1] as AnimeCategory},
-    {slug:"/product-category/apparel/crop-tops",productCategory:pcats[2] as ProductCategory,animeCategory:acats[2] as AnimeCategory},
-    {slug:"/product-category/accessories/caps-hats",productCategory:pcats[3] as ProductCategory,animeCategory:acats[3] as AnimeCategory},
+    {slug:"/product-category/apparel/hoodies-jackets/hoodies",productCategory:pcats[0] as ProductCategory,animeCategory:acats[4] as AnimeCategory},
+    {slug:"/product-category/apparel/hoodies-jackets/bomber-jackets",productCategory:pcats[1] as ProductCategory,animeCategory:acats[4] as AnimeCategory},
+    {slug:"/product-category/apparel/crop-tops",productCategory:pcats[2] as ProductCategory,animeCategory:acats[4] as AnimeCategory},
+    {slug:"/product-category/accessories/caps-hats",productCategory:pcats[3] as ProductCategory,animeCategory:acats[4] as AnimeCategory},
+    {slug:"/product-tag/naruto/?orderby=rating",productCategory:pcats[4] as ProductCategory,animeCategory:acats[0] as AnimeCategory},
+    {slug:"/product-tag/attack-on-titan/?orderby=rating",productCategory:pcats[4] as ProductCategory,animeCategory:acats[1] as AnimeCategory},
+    {slug:"/product-tag/one-piece/?orderby=rating",productCategory:pcats[4] as ProductCategory,animeCategory:acats[2] as AnimeCategory},
+    {slug:"/product-tag/bleach/?orderby=rating",productCategory:pcats[4] as ProductCategory,animeCategory:acats[3] as AnimeCategory},
+
 ]
 async function fetchFromSource(){
     await AppDataSource.manager.transaction(async (transactionalEntityManager)=>{

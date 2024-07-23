@@ -22,6 +22,7 @@ const Product_1 = require("../entity/Product");
 const ProductCategory_1 = require("../entity/ProductCategory");
 const User_1 = require("../entity/User");
 const logger_1 = require("../services/logger");
+const typeorm_1 = require("typeorm");
 exports.router = express_1.default.Router();
 exports.router.get('/products', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -74,11 +75,20 @@ exports.router.get('/products', (req, res) => __awaiter(void 0, void 0, void 0, 
     return res.status(200).json({ products: newProds });
 }));
 exports.router.get("/animeCats", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const animeCategories = yield req.locals.orm.getRepository(AnimeCategory_1.AnimeCategory).find();
+    // not include other label 
+    const animeCategories = yield req.locals.orm.getRepository(AnimeCategory_1.AnimeCategory).find({
+        where: {
+            label: (0, typeorm_1.Not)("Other")
+        }
+    });
     return res.status(200).json({ animeCategories });
 }));
 exports.router.get("/productCats", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const productCategories = yield req.locals.orm.getRepository(ProductCategory_1.ProductCategory).find();
+    const productCategories = yield req.locals.orm.getRepository(ProductCategory_1.ProductCategory).find({
+        where: {
+            label: (0, typeorm_1.Not)("Other")
+        }
+    });
     return res.status(200).json({ productCategories });
 }));
 // toggles the like of a product
