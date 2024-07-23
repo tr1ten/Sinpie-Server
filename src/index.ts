@@ -26,8 +26,8 @@ origin: function(origin: string, callback: (arg0: Error, arg1: boolean) => void)
     }
 }
 }
+const app: Express = express();
 AppDataSource.initialize().then(async () => {
-    const app: Express = express();
     app.use(morgan('dev'));
     app.use(cookieParser());
     app.use(bodyParser.json());
@@ -67,3 +67,4 @@ AppDataSource.initialize().then(async () => {
     });
     
 }).catch(error => console.log(error))
+export default app;

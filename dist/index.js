@@ -42,8 +42,8 @@ exports.corsOptions = {
         }
     }
 };
+const app = (0, express_1.default)();
 data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    const app = (0, express_1.default)();
     app.use((0, morgan_1.default)('dev'));
     app.use((0, cookie_parser_1.default)());
     app.use(body_parser_1.default.json());
@@ -82,4 +82,5 @@ data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, vo
         console.log(`App listening at http://localhost:${port}`);
     });
 })).catch(error => console.log(error));
+exports.default = app;
 //# sourceMappingURL=index.js.map
