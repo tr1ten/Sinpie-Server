@@ -98,7 +98,7 @@ exports.router.get('/:pid/reviews', (req, res) => __awaiter(void 0, void 0, void
         return res.status(400).json({ error: e.message });
     }
 }));
-// Add PUT endpoint for updating reviews
+// Update the PUT endpoint to handle existing images correctly
 exports.router.put('/:pid/review/:reviewId', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { pid, reviewId } = req.params;
@@ -115,8 +115,14 @@ exports.router.put('/:pid/review/:reviewId', passport_1.default.authenticate('jw
             throw new Error('Unauthorized');
         // Validate and filter images
         const validImages = (images || [])
-            .filter(validateImage)
-            .map((img) => img.split(',')[1])
+            .filter((img) => {
+            // If it's already a base64 string (existing image)
+            if (!img.includes(','))
+                return true;
+            // If it's a new image, validate it
+            return validateImage(img);
+        })
+            .map((img) => img.includes(',') ? img.split(',')[1] : img) // Only split new images
             .slice(0, 5);
         // Update review
         review.comment = comment;
