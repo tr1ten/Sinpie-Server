@@ -16,6 +16,7 @@ const User_1 = require("./User");
 const CartItem_1 = require("./CartItem");
 let Cart = class Cart {
 };
+exports.Cart = Cart;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
@@ -37,8 +38,7 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], Cart.prototype, "cartItems", void 0);
-Cart = __decorate([
+exports.Cart = Cart = __decorate([
     (0, typeorm_1.Entity)()
 ], Cart);
-exports.Cart = Cart;
 //# sourceMappingURL=Cart.js.map

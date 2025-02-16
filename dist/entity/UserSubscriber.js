@@ -35,8 +35,8 @@ let UserSubscriber = class UserSubscriber {
         });
     }
 };
-UserSubscriber = __decorate([
+exports.UserSubscriber = UserSubscriber;
+exports.UserSubscriber = UserSubscriber = __decorate([
     (0, typeorm_1.EventSubscriber)()
 ], UserSubscriber);
-exports.UserSubscriber = UserSubscriber;
 //# sourceMappingURL=UserSubscriber.js.map

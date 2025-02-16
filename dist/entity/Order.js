@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const Cart_1 = require("./Cart");
 let Order = class Order {
 };
+exports.Order = Order;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
@@ -45,8 +46,7 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Order.prototype, "updatedAt", void 0);
-Order = __decorate([
+exports.Order = Order = __decorate([
     (0, typeorm_1.Entity)()
 ], Order);
-exports.Order = Order;
 //# sourceMappingURL=Order.js.map

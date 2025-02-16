@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mailOrder = void 0;
+exports.mailOrder = mailOrder;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 require('dotenv').config();
 const configOpt = {
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
-    secure: false,
+    secure: false, // true for 465, false for other ports
     auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -32,7 +32,7 @@ function mailOrder(subject, html, to) {
             let info = yield transporter.sendMail({
                 from: configOpt.auth.user,
                 to,
-                subject: subject,
+                subject: subject, // Subject line
                 html // html body
             });
             console.log("Message sent: %s", info.messageId);
@@ -43,7 +43,6 @@ function mailOrder(subject, html, to) {
         }
     });
 }
-exports.mailOrder = mailOrder;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         mailOrder("test", "test", '');

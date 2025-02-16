@@ -19,6 +19,7 @@ let AnimeCategory = class AnimeCategory {
         this.slug = (0, util_1.titleToSlug)(this.label);
     }
 };
+exports.AnimeCategory = AnimeCategory;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
@@ -49,8 +50,7 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AnimeCategory.prototype, "sluggifyTitles", null);
-AnimeCategory = __decorate([
+exports.AnimeCategory = AnimeCategory = __decorate([
     (0, typeorm_1.Entity)()
 ], AnimeCategory);
-exports.AnimeCategory = AnimeCategory;
 //# sourceMappingURL=AnimeCategory.js.map

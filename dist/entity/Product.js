@@ -17,6 +17,7 @@ const User_1 = require("./User");
 const Review_1 = require("./Review");
 let Product = class Product {
 };
+exports.Product = Product;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
@@ -71,8 +72,7 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Review_1.Review, review => review.product),
     __metadata("design:type", Object)
 ], Product.prototype, "reviews", void 0);
-Product = __decorate([
+exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);
-exports.Product = Product;
 //# sourceMappingURL=Product.js.map

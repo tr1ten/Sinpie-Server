@@ -19,6 +19,7 @@ let ProductCategory = class ProductCategory {
         this.slug = (0, util_1.titleToSlug)(this.label);
     }
 };
+exports.ProductCategory = ProductCategory;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
@@ -43,8 +44,7 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductCategory.prototype, "sluggifyTitles", null);
-ProductCategory = __decorate([
+exports.ProductCategory = ProductCategory = __decorate([
     (0, typeorm_1.Entity)()
 ], ProductCategory);
-exports.ProductCategory = ProductCategory;
 //# sourceMappingURL=ProductCategory.js.map

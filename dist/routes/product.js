@@ -120,7 +120,7 @@ exports.router.post('/:pid/favorite', (0, cors_1.default)(index_1.corsOptions), 
 }));
 // get fav of a product
 exports.router.get('/:pid/favorite', (0, cors_1.default)(index_1.corsOptions), passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
+    var _a;
     try {
         const { pid } = req.params;
         const user = req.user;
@@ -132,7 +132,7 @@ exports.router.get('/:pid/favorite', (0, cors_1.default)(index_1.corsOptions), p
             throw new Error('Product not found');
         if (!fetchedUser)
             throw new Error('User not found');
-        const isFav = (_b = fetchedUser.favoriteProducts) === null || _b === void 0 ? void 0 : _b.find((fav) => fav.id === product.id);
+        const isFav = (_a = fetchedUser.favoriteProducts) === null || _a === void 0 ? void 0 : _a.find((fav) => fav.id === product.id);
         return res.status(200).json({ favorite: Boolean(isFav) });
     }
     catch (e) {

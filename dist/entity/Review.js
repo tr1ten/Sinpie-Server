@@ -15,6 +15,7 @@ const User_1 = require("./User");
 const Product_1 = require("./Product");
 let Review = class Review {
 };
+exports.Review = Review;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
@@ -43,8 +44,7 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Review.prototype, "createdAt", void 0);
-Review = __decorate([
+exports.Review = Review = __decorate([
     (0, typeorm_1.Entity)()
 ], Review);
-exports.Review = Review;
 //# sourceMappingURL=Review.js.map

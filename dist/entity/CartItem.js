@@ -16,6 +16,7 @@ const Cart_1 = require("./Cart");
 const Product_1 = require("./Product");
 let CartItem = class CartItem {
 };
+exports.CartItem = CartItem;
 __decorate([
     (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
@@ -43,9 +44,8 @@ __decorate([
     (0, typeorm_1.ManyToOne)(type => Product_1.Product, { eager: true }),
     __metadata("design:type", Object)
 ], CartItem.prototype, "product", void 0);
-CartItem = __decorate([
+exports.CartItem = CartItem = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Index)(["cartId", "productId"], { unique: true })
 ], CartItem);
-exports.CartItem = CartItem;
 //# sourceMappingURL=CartItem.js.map
