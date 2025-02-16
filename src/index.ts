@@ -49,7 +49,7 @@ AppDataSource.initialize().then(async () => {
     app.use(passport.initialize());
     app.use(passport.session());
     passport.use(PassportStrategy);
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 4000;
     app.use('/auth',cors(corsOptions),authRouter);
     app.use('/',productRouter);
     app.use('/cart',cors(corsOptions),cartRouter);

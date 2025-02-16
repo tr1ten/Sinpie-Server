@@ -65,7 +65,7 @@ data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, vo
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     passport_1.default.use(passport_2.PassportStrategy);
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 4000;
     app.use('/auth', (0, cors_1.default)(exports.corsOptions), auth_1.router);
     app.use('/', product_1.router);
     app.use('/cart', (0, cors_1.default)(exports.corsOptions), cart_1.router);
