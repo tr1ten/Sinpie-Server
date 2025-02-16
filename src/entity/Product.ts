@@ -3,6 +3,7 @@ import { AnimeCategory } from "./AnimeCategory";
 import { CartItem } from "./CartItem";
 import { ProductCategory } from "./ProductCategory";
 import { User } from "./User";
+import { Review } from "./Review";
 
 @Entity()
 export class Product {
@@ -47,4 +48,7 @@ export class Product {
 
         @ManyToMany(type => User, user => user.favoriteProducts)
         favoriteUsers: Relation<User[]>
+
+        @OneToMany(() => Review, review => review.product)
+        reviews: Relation<Review[]>;
     }

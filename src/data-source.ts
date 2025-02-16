@@ -8,6 +8,7 @@ import { Product } from "./entity/Product"
 import { ProductCategory } from "./entity/ProductCategory"
 import { User } from "./entity/User"
 import { UserSubscriber } from "./entity/UserSubscriber"
+import { Review } from "./entity/Review"
 require("dotenv").config()
 // environment variables
 const env = process.env
@@ -22,7 +23,7 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     dropSchema: false,
     logging: false,
-    entities: [User, Product, ProductCategory, AnimeCategory,Cart,CartItem,Order],
+    entities: [User, Product, ProductCategory, AnimeCategory,Cart,CartItem,Order,Review],
     migrations: [],
     subscribers: [UserSubscriber]
 })

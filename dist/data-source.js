@@ -11,6 +11,7 @@ const Product_1 = require("./entity/Product");
 const ProductCategory_1 = require("./entity/ProductCategory");
 const User_1 = require("./entity/User");
 const UserSubscriber_1 = require("./entity/UserSubscriber");
+const Review_1 = require("./entity/Review");
 require("dotenv").config();
 // environment variables
 const env = process.env;
@@ -24,7 +25,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     synchronize: false,
     dropSchema: false,
     logging: false,
-    entities: [User_1.User, Product_1.Product, ProductCategory_1.ProductCategory, AnimeCategory_1.AnimeCategory, Cart_1.Cart, CartItem_1.CartItem, Order_1.Order],
+    entities: [User_1.User, Product_1.Product, ProductCategory_1.ProductCategory, AnimeCategory_1.AnimeCategory, Cart_1.Cart, CartItem_1.CartItem, Order_1.Order, Review_1.Review],
     migrations: [],
     subscribers: [UserSubscriber_1.UserSubscriber]
 });

@@ -13,6 +13,7 @@ import { ormMiddleware } from "./middleware/middleware";
 import morgan from "morgan";
 import { router as orderRouter } from "./routes/order";
 import userRouter from './routes/user';
+import { router as reviewRouter } from './routes/review';
 var MySQLStore = require('express-mysql-session')(session);
 const sessionStore = new MySQLStore(DB_OPTIONS);
 const whitelist = ['http://localhost:3000','https://sinpie.vercel.app','http://www.ilov.tech','https://www.ilov.tech','http://ilov.tech','https://ilov.tech','https://sinpie.vercel.app/']
@@ -30,7 +31,12 @@ const app: Express = express();
 AppDataSource.initialize().then(async () => {
     app.use(morgan('dev'));
     app.use(cookieParser());
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({limit: '50mb'}));
+    app.use(bodyParser.urlencoded({
+        limit: '50mb',
+        extended: true,
+        parameterLimit: 50000
+    }));
     app.use(ormMiddleware);
     app.use(session({
         secret: 'keyboard cat',
@@ -49,6 +55,7 @@ AppDataSource.initialize().then(async () => {
     app.use('/cart',cors(corsOptions),cartRouter);
     app.use('/order',cors(corsOptions),orderRouter);
     app.use('/user',cors(corsOptions),userRouter);
+    app.use('/', reviewRouter);
     // route for checking if user logged in or not
     app.get('/user',passport.authenticate('jwt',{session:false}),async (req: Request, res: Response) => {
         try{

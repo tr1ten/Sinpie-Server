@@ -28,6 +28,7 @@ const middleware_1 = require("./middleware/middleware");
 const morgan_1 = __importDefault(require("morgan"));
 const order_1 = require("./routes/order");
 const user_1 = __importDefault(require("./routes/user"));
+const review_1 = require("./routes/review");
 var MySQLStore = require('express-mysql-session')(express_session_1.default);
 const sessionStore = new MySQLStore(data_source_1.DB_OPTIONS);
 const whitelist = ['http://localhost:3000', 'https://sinpie.vercel.app', 'http://www.ilov.tech', 'https://www.ilov.tech', 'http://ilov.tech', 'https://ilov.tech', 'https://sinpie.vercel.app/'];
@@ -46,7 +47,12 @@ const app = (0, express_1.default)();
 data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, void 0, function* () {
     app.use((0, morgan_1.default)('dev'));
     app.use((0, cookie_parser_1.default)());
-    app.use(body_parser_1.default.json());
+    app.use(body_parser_1.default.json({ limit: '50mb' }));
+    app.use(body_parser_1.default.urlencoded({
+        limit: '50mb',
+        extended: true,
+        parameterLimit: 50000
+    }));
     app.use(middleware_1.ormMiddleware);
     app.use((0, express_session_1.default)({
         secret: 'keyboard cat',
@@ -65,6 +71,7 @@ data_source_1.AppDataSource.initialize().then(() => __awaiter(void 0, void 0, vo
     app.use('/cart', (0, cors_1.default)(exports.corsOptions), cart_1.router);
     app.use('/order', (0, cors_1.default)(exports.corsOptions), order_1.router);
     app.use('/user', (0, cors_1.default)(exports.corsOptions), user_1.default);
+    app.use('/', review_1.router);
     // route for checking if user logged in or not
     app.get('/user', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {

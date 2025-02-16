@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const AnimeCategory_1 = require("./AnimeCategory");
 const ProductCategory_1 = require("./ProductCategory");
 const User_1 = require("./User");
+const Review_1 = require("./Review");
 let Product = class Product {
 };
 __decorate([
@@ -66,6 +67,10 @@ __decorate([
     (0, typeorm_1.ManyToMany)(type => User_1.User, user => user.favoriteProducts),
     __metadata("design:type", Object)
 ], Product.prototype, "favoriteUsers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Review_1.Review, review => review.product),
+    __metadata("design:type", Object)
+], Product.prototype, "reviews", void 0);
 Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);

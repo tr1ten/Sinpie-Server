@@ -13,6 +13,7 @@ exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const Cart_1 = require("./Cart");
 const Product_1 = require("./Product");
+const Review_1 = require("./Review");
 let User = class User {
 };
 __decorate([
@@ -61,6 +62,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Cart_1.Cart)
 ], User.prototype, "cart", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Review_1.Review, review => review.user),
+    __metadata("design:type", Object)
+], User.prototype, "reviews", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

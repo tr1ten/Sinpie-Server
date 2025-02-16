@@ -8,10 +8,12 @@ import {
   OneToOne,
   JoinColumn,
   BeforeInsert,
+  OneToMany,
 } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Cart } from "./Cart";
 import { Product } from "./Product";
+import { Review } from "./Review";
 
 @Entity()
 export class User {
@@ -51,4 +53,7 @@ export class User {
   @OneToOne((type) => Cart, (cart) => cart.user,{cascade:true})
   @JoinColumn()
   cart: Cart;
+
+  @OneToMany(() => Review, review => review.user)
+  reviews: Relation<Review[]>;
 }

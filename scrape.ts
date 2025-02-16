@@ -41,8 +41,7 @@ export async function getCategoryProd(catSlug:string,productCategory?:ProductCat
     
     const $ =  cheerio.load(html);
     const products:Partial<Product>[] = [];
-    $('ul.products > li.product').each(async (i, el) => {
-        
+    $('ul.products > li.product').each((i, el) => {
         const product:Partial<Product> = {
             productCategory,
             animeCategory,
